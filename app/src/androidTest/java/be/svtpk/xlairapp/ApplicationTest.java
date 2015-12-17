@@ -1,4 +1,4 @@
-package com.ludovicsvetlana.xlair;
+package be.svtpk.xlairapp;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
