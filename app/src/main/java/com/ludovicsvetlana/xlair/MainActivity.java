@@ -16,7 +16,7 @@ public class MainActivity extends ActionBarActivity implements MediaController.M
     MediaPlayer mPlayer;
     Button playButton;
     boolean playerIsPlaying = false;
-    public String URLToStream = "http://planning.rits.be:8000/stream.mp3";
+    public String URLToStream = "http://streaming.ritcs.be:8000/.mp3";
 
     protected void createAndPlayMusicPlayer(){
         mPlayer = new MediaPlayer();
