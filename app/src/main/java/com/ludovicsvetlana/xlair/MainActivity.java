@@ -9,9 +9,17 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.Toast;
 
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import io.fabric.sdk.android.Fabric;
 import java.io.IOException;
 
 public class MainActivity extends ActionBarActivity implements MediaController.MediaPlayerControl {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "dsJkyfrhAqEwoz4DUtutt3DAZ";
+    private static final String TWITTER_SECRET = "MP7RoeNjFpjqW4uZtj6cQURJjQenHK0vULw8hXeCb043rpgDgW";
+
 
     MediaPlayer mPlayer;
     Button playButton;
@@ -47,6 +55,8 @@ public class MainActivity extends ActionBarActivity implements MediaController.M
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
         playerIsPlaying = false;
         playButton = (Button) findViewById(R.id.playbtn);

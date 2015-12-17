@@ -19,6 +19,9 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f7609555f6fa141ca2c9d98bffbed4aec5aa8368" />
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@ public class TwitterFragment extends Fragment {
     // What does the fragment look like
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_twitterfeed, container, false);
+        View view = inflater.inflate(android.R.layout.fragment_twitterfeed, container, false);
         return view;
     }
 }
