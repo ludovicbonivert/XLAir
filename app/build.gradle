@@ -15,7 +15,7 @@ repositories {
 }
 
 
-android {
+android     {
     compileSdkVersion 15
     buildToolsVersion "19.1.0"
 
