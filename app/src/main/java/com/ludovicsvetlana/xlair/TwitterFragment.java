@@ -17,8 +17,6 @@ import java.io.IOException;
 public class TwitterFragment extends Fragment {
 
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +29,6 @@ public class TwitterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_twitterfeed, container, false);
         return view;
     }
-
-
-
 
 
 }
