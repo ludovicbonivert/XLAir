@@ -1,9 +1,12 @@
 package com.ludovicsvetlana.xlair;
 
+import android.app.Activity;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
@@ -14,17 +17,22 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import io.fabric.sdk.android.Fabric;
 import java.io.IOException;
 
-public class MainActivity extends ActionBarActivity implements MediaController.MediaPlayerControl {
+public class MainActivity extends AppCompatActivity implements MediaController.MediaPlayerControl {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "dsJkyfrhAqEwoz4DUtutt3DAZ";
-    private static final String TWITTER_SECRET = "MP7RoeNjFpjqW4uZtj6cQURJjQenHK0vULw8hXeCb043rpgDgW";
+    private static final String TWITTER_KEY = "DaQDVZVYmAJhdupZeTWrUwQWi";
+    private static final String TWITTER_SECRET = "0QQLeDDL1EvsMXSY2hLvUaNcL85XngYSBYA3H8iTnneXTeXOdy";
 
 
     MediaPlayer mPlayer;
     Button playButton;
     boolean playerIsPlaying = false;
     public String URLToStream = "http://streaming.ritcs.be:8000/.mp3";
+
+    @Override
+    public int getAudioSessionId() {
+        return 0;
+    }
 
     protected void createAndPlayMusicPlayer(){
         mPlayer = new MediaPlayer();
@@ -42,10 +50,11 @@ public class MainActivity extends ActionBarActivity implements MediaController.M
             e.printStackTrace();
         }
         try {
-            mPlayer.prepare();
-        } catch (IllegalStateException e) {
+            mPlayer.prepareAsync();
+        }catch (IllegalArgumentException e){
             Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
+        }
+        catch (IllegalStateException e) {
             Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
         mPlayer.start();
