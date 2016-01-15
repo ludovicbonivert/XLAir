@@ -1,10 +1,13 @@
 package com.ludovicsvetlana.xlair;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.AppSession;
@@ -56,4 +59,30 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_tweet:
+                Log.d("Xlair", "Clicked on tweeting");
+                createTweet();
+                return true;
+            case R.id.action_settings:
+                Log.d("Xlair", "Clicked on settings");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private void createTweet(){
+        // Intent is going to open browser if no twitter app is found on phone
+        String url = "http://www.twitter.com/intent/tweet?hashtags=XLAIR";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
+
 }
