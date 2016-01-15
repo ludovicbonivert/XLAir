@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "XLAIR";
 
     private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerListener;
     private ListView listView_navigation;
     private String[] listView_navigation_items;
 
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         listView_navigation = (ListView) findViewById(R.id.left_drawer_listview);
         listView_navigation_items = getResources().getStringArray(R.array.menu_items);
 
@@ -71,6 +74,22 @@ public class MainActivity extends AppCompatActivity {
         });
         Toolbar myToolbar = (Toolbar) findViewById(R.id.the_toolbar);
         setSupportActionBar(myToolbar);
+
+        drawerListener = new ActionBarDrawerToggle(this, drawerLayout,
+                myToolbar, R.string.drawer_open, R.string.drawer_close){
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        drawerLayout.setDrawerListener(drawerListener);
+
 
     }
 
