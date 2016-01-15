@@ -3,11 +3,14 @@ package com.ludovicsvetlana.xlair;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.AppSession;
@@ -24,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "HvLUDxv9TTrmGPcc0Ak9TLOUg";
     private static final String TWITTER_SECRET = "7TQnTAABlQB6wi8ABcvkCkXwI6axIyRCWfW0sjDZouCZvY4GGo";
+
+
+    private DrawerLayout drawerLayout;
+    private ListView listView_navigation;
+    private String[] listView_navigation_items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        //Toolbar myToolbar = (Toolbar) findViewById(R.id.the_toolbar);
-        //setSupportActionBar(myToolbar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        listView_navigation = (ListView) findViewById(R.id.left_drawer_listview);
+        listView_navigation_items = getResources().getStringArray(R.array.menu_items);
+
+        listView_navigation.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listView_navigation_items));
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.the_toolbar);
+        setSupportActionBar(myToolbar);
 
     }
 

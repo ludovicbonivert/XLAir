@@ -6,10 +6,11 @@
     <string name="action_settings">Settings</string>
     <string name="action_tweet">Tweet</string>
 
-    <string-array name="planets">
-        <item>Mercury</item>
-        <item>Jupiter</item>
-
+    <string-array name="menu_items">
+        <item>Live</item>
+        <item>Programma\'s</item>
+        <item>Events</item>
+        <item>Contact</item>
 
     </string-array>
 </resources>
