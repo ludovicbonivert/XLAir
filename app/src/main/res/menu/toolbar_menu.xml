@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+
+    <item
+        android:id="@+id/action_tweet"
+        android:icon="@drawable/ic_message_black_24dp"
+        android:title="@string/action_tweet"
+        app:showAsAction="ifRoom"/>
+
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
