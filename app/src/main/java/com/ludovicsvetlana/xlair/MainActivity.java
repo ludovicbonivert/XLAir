@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TWITTER_KEY = "HvLUDxv9TTrmGPcc0Ak9TLOUg";
     private static final String TWITTER_SECRET = "7TQnTAABlQB6wi8ABcvkCkXwI6axIyRCWfW0sjDZouCZvY4GGo";
 
+    public static final String LOG_TAG = "XLAIR";
 
     private DrawerLayout drawerLayout;
     private ListView listView_navigation;
@@ -60,11 +63,26 @@ public class MainActivity extends AppCompatActivity {
         listView_navigation_items = getResources().getStringArray(R.array.menu_items);
 
         listView_navigation.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listView_navigation_items));
-
+        listView_navigation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItem(position);
+            }
+        });
         Toolbar myToolbar = (Toolbar) findViewById(R.id.the_toolbar);
         setSupportActionBar(myToolbar);
 
     }
+
+    private void selectItem(int position) {
+        listView_navigation.setItemChecked(position, true);
+        changeTitleTo(listView_navigation_items[position]);
+    }
+
+    private void changeTitleTo(String listView_navigation_item) {
+        getSupportActionBar().setTitle(listView_navigation_item);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
