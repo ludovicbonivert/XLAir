@@ -3,6 +3,8 @@ package com.ludovicsvetlana.xlair;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -90,12 +92,37 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout.setDrawerListener(drawerListener);
 
+        getSupportActionBar().setHomeButtonEnabled(true);
+        /*
 
+        Click on title to open navigation drawer werkt nog niet
+        
+        myToolbar.setNavigationIcon(R.drawable.ic_drawer);
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // dit toont up button icon
+        */
+
+    }
+
+
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        drawerListener.syncState();
     }
 
     private void selectItem(int position) {
         listView_navigation.setItemChecked(position, true);
         changeTitleTo(listView_navigation_items[position]);
+        drawerLayout.closeDrawer(listView_navigation);
     }
 
     private void changeTitleTo(String listView_navigation_item) {
@@ -113,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch(item.getItemId()){
+
             case R.id.action_tweet:
                 Log.d("Xlair", "Clicked on tweeting");
                 createTweet();
