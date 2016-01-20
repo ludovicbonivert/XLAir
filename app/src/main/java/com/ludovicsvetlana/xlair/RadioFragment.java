@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -15,12 +16,34 @@ import java.io.IOException;
 /**
  * Created by ludovicbonivert on 18/12/15.
  */
-public class RadioFragment extends Fragment{
+public class RadioFragment extends Fragment implements MediaController.MediaPlayerControl{
 
+    private RadioController radioController;
     MediaPlayer mPlayer;
     Button playButton;
     boolean playerIsPlaying = false;
     public String URLToStream = "http://streaming.ritcs.be:8000/.mp3";
+
+
+    private void setRadioController(){
+            radioController = new RadioController(getContext());
+            radioController.setPrevNextListeners(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    playNext();
+                }
+            }, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    playPrev();
+                }
+            });
+
+        radioController.setMediaPlayer(this);
+        radioController.setAnchorView(getView().findViewById(R.id.playbtn));
+        radioController.setEnabled(true);
+
+    }
 
     // What does the fragment look like
     @Override
@@ -45,6 +68,7 @@ public class RadioFragment extends Fragment{
                 }
             }
         });
+        setRadioController();
         return view;
     }
 
@@ -56,7 +80,60 @@ public class RadioFragment extends Fragment{
 
     }
 
+    @Override
+    public void start() {
 
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public int getDuration() {
+        return 0;
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return 0;
+    }
+
+    @Override
+    public void seekTo(int pos) {
+
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return false;
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPause() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return false;
+    }
+
+    @Override
+    public int getAudioSessionId() {
+        return 0;
+    }
 
     protected void createAndPlayMusicPlayer(){
         mPlayer = new MediaPlayer();
