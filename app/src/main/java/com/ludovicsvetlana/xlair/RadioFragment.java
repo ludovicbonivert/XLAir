@@ -1,8 +1,12 @@
 package com.ludovicsvetlana.xlair;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,9 @@ import java.io.IOException;
  */
 public class RadioFragment extends Fragment implements MediaController.MediaPlayerControl{
 
+    private RadioService radioService;
+    private Intent playIntent;
+    private boolean musicBound = false;
     private RadioController radioController;
     MediaPlayer mPlayer;
     Button playButton;
@@ -72,6 +79,21 @@ public class RadioFragment extends Fragment implements MediaController.MediaPlay
         return view;
     }
 
+
+    // Connect to the service
+    private ServiceConnection radioConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            RadioService.RadioBinder binder = (RadioService.RadioBinder) service;
+            radioService = binder.getService();
+            musicBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            musicBound = false;
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,6 +181,13 @@ public class RadioFragment extends Fragment implements MediaController.MediaPlay
             Toast.makeText(getActivity().getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
         mPlayer.start();
+
+        if(playIntent == null){
+            playIntent = new Intent(this, RadioService.class);
+            bindService()
+        }
+
+
     }
 
 }
