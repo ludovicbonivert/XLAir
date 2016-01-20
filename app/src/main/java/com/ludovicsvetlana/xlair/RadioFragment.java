@@ -30,12 +30,12 @@ public class RadioFragment extends Fragment implements MediaController.MediaPlay
             radioController.setPrevNextListeners(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    playNext();
+                    //playNext();
                 }
             }, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    playPrev();
+                    //playPrev();
                 }
             });
 
