@@ -31,6 +31,8 @@ public class Programme extends SugarRecord {
     @SerializedName("updated_at")
     Date updatedAt;
 
+    @Ignore
+    private static final String BASE_URL = "http://www.xlair.be/public/uploads/programs/";
 
     public Programme() {
 
@@ -70,7 +72,7 @@ public class Programme extends SugarRecord {
     }
 
     public String getImgSrc() {
-        return "http://www.xlair.be/public/uploads/programs/" + this.image;
+        return (BASE_URL + this.image);
     }
 
     public String getImageFileSrc() {

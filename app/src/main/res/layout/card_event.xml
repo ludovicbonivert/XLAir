@@ -5,7 +5,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:id="@+id/cv_programme"
+    android:id="@+id/cv_event"
     >
 
     <RelativeLayout
@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/programme_icon"
+            android:id="@+id/event_icon"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="10dp"
@@ -35,8 +35,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/programme_title"
-            android:layout_toRightOf="@+id/programme_icon"
+            android:id="@+id/event_title"
+            android:layout_toRightOf="@+id/event_icon"
             android:layout_alignParentTop="true"
             android:textSize="13sp"
             android:fontFamily="sans-serif-medium"
@@ -47,9 +47,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/programme_nb_broadcasts"
-            android:layout_toRightOf="@+id/programme_icon"
-            android:layout_below="@+id/programme_title"
+            android:id="@+id/event_date"
+            android:layout_toRightOf="@+id/event_icon"
+            android:layout_below="@+id/event_title"
             android:textStyle="italic"
             android:paddingBottom="10dp"
             android:textSize="12sp"
@@ -59,9 +59,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/programme_desc"
-            android:layout_toRightOf="@+id/programme_icon"
-            android:layout_below="@+id/programme_nb_broadcasts"
+            android:id="@+id/event_desc"
+            android:layout_toRightOf="@+id/event_icon"
+            android:layout_below="@+id/event_date"
             android:paddingBottom="10dp"
             android:textSize="12sp"
             />

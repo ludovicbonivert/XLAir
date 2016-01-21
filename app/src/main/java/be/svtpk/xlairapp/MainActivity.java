@@ -3,7 +3,6 @@ package be.svtpk.xlairapp;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +21,8 @@ import be.svtpk.xlairapp.Data.Broadcast;
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProgrammeListFragment.OnFragmentInteractionListener,
-        ProgrammeFragment.OnFragmentInteractionListener {
+        ProgrammeFragment.OnFragmentInteractionListener, EventListFragment.OnFragmentInteractionListener,
+        EventFragment.OnFragmentInteractionListener {
 
 
     @Override
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_programmas) {
             fragment = new ProgrammeListFragment();
         } else if (id == R.id.nav_events) {
-            fragment = new EventsFragment();
+            fragment = new EventListFragment();
         } else if (id == R.id.nav_contact) {
             fragment = new ContactFragment();
         }
@@ -144,6 +144,27 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    @Override
+    public void onEventSelected(long id) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+
+        // Put selected id programme in bundle
+        Bundle bundle = new Bundle();
+        bundle.putLong("selectedEvent", id);
+        EventFragment fragment = new EventFragment();
+        fragment.setArguments(bundle);
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.content_main, fragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
     @Override
     public void onProgrammeSelected(long id) {
 
