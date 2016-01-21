@@ -165,9 +165,6 @@ public class ProgrammeListFragment extends Fragment {
                     // Sugar ORM save for later use
                     prog.save();
 
-                }
-
-
                     // Fetch broadcasts
                     new BroadcastFetcher().execute(prog.getId());
                 }
