@@ -25,9 +25,6 @@ public class TweetListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
-
         SearchTimeline searchTimeline = new SearchTimeline.Builder().query(SEARCH_QUERY).build();
         final TweetTimelineListAdapter tweetAdapter = new TweetTimelineListAdapter.Builder(getContext())
                 .setTimeline(searchTimeline).build();
