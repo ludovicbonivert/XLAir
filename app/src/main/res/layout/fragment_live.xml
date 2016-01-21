@@ -3,12 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="be.svtpk.xlairapp.LiveFragment"
-    android:background="@color/colorAccent">
+    android:background="@color/tw__solid_white">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="be.svtpk.xlairapp.TweetListFragment"
+        android:id="@+id/fragment"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        tools:layout="@layout/fragment_twitter_timeline"
+        />
 
 </FrameLayout>

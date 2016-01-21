@@ -72,8 +72,24 @@ public class MainActivity extends AppCompatActivity
         setupToolbar();
         findAndSetupRadioPlayer();
 
+
+        launchLiveFragment();
+
+
+
         //http://jsonplaceholder.typicode.com/posts
         new HTTPRequestAndGetJsonTask().execute("http://www.xlair.be/scheme/data");
+    }
+
+    private void launchLiveFragment() {
+
+        Fragment fragment = new LiveFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.content_main, fragment);
+        transaction.commit();
     }
 
     private void findAndSetupRadioPlayer() {
@@ -226,7 +242,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_live) {
             fragment = new LiveFragment();
-
         } else if (id == R.id.nav_programmas) {
             fragment = new ProgrammeListFragment();
         } else if (id == R.id.nav_events) {
