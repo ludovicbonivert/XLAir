@@ -1,13 +1,118 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    tools:context="be.svtpk.xlairapp.ProgrammeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="be.svtpk.xlairapp.ProgrammeFragment">
+    android:background="@android:color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/scroll_view">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/prog_img"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="#64000000" />
+
+        <TextView
+            android:id="@+id/prog_nb_broadcasts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/prog_img"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="25dp"
+            android:layout_centerHorizontal="true"
+            android:text="0 uitzendingen"
+            android:textSize="14dp"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/prog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/prog_nb_broadcasts"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="25dp"
+            android:layout_centerHorizontal="true"
+            android:text="Programma Titel"
+            android:textSize="18dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
+        <com.ms.square.android.expandabletextview.ExpandableTextView
+            android:id="@+id/expand_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/prog_img"
+            android:layout_alignParentLeft="true"
+            expandableTextView:maxCollapsedLines="2"
+            expandableTextView:animDuration="200">
+
+            <TextView
+                android:id="@id/expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/textColorPrimary" />
+
+            <ImageButton
+                android:id="@id/expand_collapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="right|bottom"
+                android:background="@android:color/transparent"/>
+        </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/prog_play"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/prog_img"
+            android:layout_marginBottom="-20dp"
+            android:layout_marginRight="20dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/play_button"
+            android:scaleType="fitCenter"
+            />
+
+    </RelativeLayout>
+</ScrollView>
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/broadcast_list"
+        android:layout_below="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="15sp"
+        android:gravity="center"
+        android:scrollbars="none"
+        />
+</RelativeLayout>
+

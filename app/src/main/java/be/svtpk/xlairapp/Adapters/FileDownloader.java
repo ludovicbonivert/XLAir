@@ -20,6 +20,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import be.svtpk.xlairapp.Data.Event;
 import be.svtpk.xlairapp.Data.Programme;
 
 /**
@@ -100,9 +102,63 @@ public class FileDownloader extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
+        // Download images of all programmes
+        downloadProgrammeImages(intent);
+
+        // Download images of all events
+        downloadEventImages(intent);
+
+    }
+
+    private void downloadProgrammeImages(Intent intent) {
         for(int i = 0; i < Programme.listAll(Programme.class).size(); i ++){
 
             Programme item = Programme.listAll(Programme.class).get(i);
+
+            try{
+                Thread.sleep(1000);
+            }
+            catch(Exception e){
+
+            }
+
+            try {
+
+                File file = new File(item.getImageFileSrc());
+
+                if(!file.exists()) {
+                    Bitmap image = downloadImage(item.getImgSrc());
+                    if (image != null) {
+                        item.setImageFileSrc(saveImage(item.getImage(), image));
+
+                        //update in database
+                        item.save();
+
+                        Intent brIntent = new Intent();
+                        brIntent.setAction(DOWNLOAD_ACTION);
+                        brIntent.putExtra("index",i);
+
+                        sendBroadcast(brIntent);
+                    }
+                }
+
+
+                //BufferedInputStream audio = downloadAudio(item.getAudio());
+                //item.setAudioFileSrc(saveAudio(item.getAudioName(), audio));
+
+
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void downloadEventImages(Intent intent) {
+        for(int i = 0; i < Event.listAll(Event.class).size(); i ++){
+
+            Event item = Event.listAll(Event.class).get(i);
 
             try{
                 Thread.sleep(1000);

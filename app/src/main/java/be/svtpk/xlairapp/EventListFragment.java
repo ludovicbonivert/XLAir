@@ -38,10 +38,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import be.svtpk.xlairapp.Adapters.EventAdapter;
 import be.svtpk.xlairapp.Adapters.FileDownloader;
-import be.svtpk.xlairapp.Adapters.ProgrammeAdapter;
-import be.svtpk.xlairapp.Data.Broadcast;
-import be.svtpk.xlairapp.Data.Programme;
+import be.svtpk.xlairapp.Data.Event;
 
 
 /**
@@ -50,15 +49,15 @@ import be.svtpk.xlairapp.Data.Programme;
  * Card view: http://code.tutsplus.com/tutorials/getting-started-with-recyclerview-and-cardview-on-android--cms-23465
  * JSON parsing: http://kylewbanks.com/blog/Tutorial-Android-Parsing-JSON-with-GSON
  */
-public class ProgrammeListFragment extends Fragment {
+public class EventListFragment extends Fragment {
 
-    private static final int ARG_MENU_ITEM = 2;
-    private List<Programme> programmes;
-    private ProgrammeAdapter programmeAdapter;
+    private static final int ARG_MENU_ITEM = 3;
+    private List<Event> events;
+    private EventAdapter eventAdapter;
     private RecyclerView rv;
     private OnFragmentInteractionListener mListener;
 
-    public ProgrammeListFragment() {
+    public EventListFragment() {
         // Required empty public constructor
     }
 
@@ -71,28 +70,28 @@ public class ProgrammeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_programme_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_event_list, container, false);
         FragmentActivity context = getActivity();
 
-        rv = (RecyclerView) view.findViewById(R.id.rec_view_prog);
+        rv = (RecyclerView) view.findViewById(R.id.rec_view_events);
         LinearLayoutManager llm = new LinearLayoutManager(context);
         rv.setLayoutManager(llm);
 
-        // Init programme list adapter
-        programmes = Programme.listAll(Programme.class);
-        programmeAdapter = new ProgrammeAdapter(programmes);
-        // Download the list of programmes from API
-        new ProgrammeFetcher().execute();
+        // Init event list adapter
+        events = Event.listAll(Event.class);
+        eventAdapter = new EventAdapter(events);
+        // Download the list of events from API
+        new EventFetcher().execute();
         // Set adapter to page view
-        rv.setAdapter(programmeAdapter);
+        rv.setAdapter(eventAdapter);
 
-        programmeAdapter.SetOnItemClickListener(new ProgrammeAdapter.OnItemClickListener() {
+        eventAdapter.SetOnItemClickListener(new EventAdapter.OnItemClickListener() {
             public void onItemClick(View v, int position) {
 
-                // Load programme detail fragment on item click
-
-                Programme selectedProgramme = programmes.get(position);
-                mListener.onProgrammeSelected(selectedProgramme.getId());
+                // Load event detail fragment on item click
+                Event selectedEvent = events.get(position);
+                Log.d("XLAir", "selected event: " + events.get(position).getTitle());
+                mListener.onEventSelected(selectedEvent.getId());
 
             }
         });
@@ -117,19 +116,19 @@ public class ProgrammeListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().unregisterReceiver(mReceiver);
+        //getActivity().unregisterReceiver(mReceiver);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().registerReceiver(mReceiver, new IntentFilter(FileDownloader.DOWNLOAD_ACTION));
+        //getActivity().registerReceiver(mReceiver, new IntentFilter(FileDownloader.DOWNLOAD_ACTION));
     }
 
-    DownloadedImageReceiver mReceiver = new DownloadedImageReceiver();
+    //DownloadedImageReceiver mReceiver = new DownloadedImageReceiver();
 
     //The DownloadedImageReceiver listens for updates from the service
-    private class DownloadedImageReceiver extends BroadcastReceiver {
+    /*private class DownloadedImageReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -138,74 +137,49 @@ public class ProgrammeListFragment extends Fragment {
     }
 
     protected void syncData(){
-        programmeAdapter.notifyDataSetChanged();
+        eventAdapter.notifyDataSetChanged();
 
-    }
+    }*/
 
 
-    private void handleProgrammeList(final List<Programme> programmes) {
+    private void handleEventList(final List<Event> events) {
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ProgrammeListFragment.this.programmes.clear();
-                ProgrammeListFragment.this.programmes.addAll(programmes);
+                EventListFragment.this.events.clear();
+                EventListFragment.this.events.addAll(events);
 
-                programmeAdapter.notifyDataSetChanged();
+                eventAdapter.notifyDataSetChanged();
 
-                Broadcast.deleteAll(Broadcast.class);
-
-                for (Programme prog : ProgrammeListFragment.this.programmes) {
+                for (Event ev : EventListFragment.this.events) {
 
                     // Strip away html tags and tabs from description
-                    String strippedDesc = Html.fromHtml(prog.getDesc()).toString();
+                    String strippedDesc = Html.fromHtml(ev.getDescription()).toString();
                     strippedDesc = strippedDesc.replace("\t", "");
-                    prog.setDesc(strippedDesc);
+                    ev.setDescription(strippedDesc);
 
                     // Sugar ORM save for later use
-                    prog.save();
+                    ev.save();
 
-                }
-
-
-                    // Fetch broadcasts
-                    new BroadcastFetcher().execute(prog.getId());
                 }
 
             }
         });
     }
 
-    private void handleBroadcasts(final long id, final List<Broadcast> broadcasts) {
-
-        // Save broadcasts for programme
-        Programme programme = Programme.findById(Programme.class, id);
-
-        try {
-            for (Broadcast br : broadcasts) {
-                br.setProgramme(programme);
-                br.save();
-            }
-        }
-        catch (NullPointerException ex) {
-        }
-
-    }
-
-    private void failedLoadingProgrammes() {
+    private void failedLoadingEvents() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 Toast.makeText(getActivity(), "Failed to load, make sure your internet connection is on.", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
 
-    private class ProgrammeFetcher extends AsyncTask<Void, Void, String> {
-        private static final String TAG = "ProgrammeFetcher";
-        public static final String SERVER_URL = "http://www.xlair.be/programmas/data/all";
+    private class EventFetcher extends AsyncTask<Void, Void, String> {
+        private static final String TAG = "EventFetcher";
+        public static final String SERVER_URL = "http://www.xlair.be/events/data/all";
 
         @Override
         protected String doInBackground(Void... params) {
@@ -228,42 +202,42 @@ public class ProgrammeListFragment extends Fragment {
                         GsonBuilder gsonBuilder = new GsonBuilder();
                         gsonBuilder.setDateFormat("yyyy-MM-dd hh:mm:ss");
                         Gson gson = gsonBuilder.create();
-                        List<Programme> programmes = new ArrayList<Programme>();
-                        programmes = Arrays.asList(gson.fromJson(reader, Programme[].class));
+                        List<Event> events = new ArrayList<Event>();
+                        events = Arrays.asList(gson.fromJson(reader, Event[].class));
 
 
-                        String programmesAsString = new Gson().toJson(programmes);
+                        String eventsAsString = new Gson().toJson(events);
                         SharedPreferences sharedPref = getActivity().getSharedPreferences("XLAir", Context.MODE_WORLD_WRITEABLE);
-                        String savedProgrammesJson = sharedPref.getString("programmesJson", "");
+                        String savedEventsJson = sharedPref.getString("eventsJson", "");
 
                         content.close();
 
                         // If data from internet == data in shared prefs, don't do anything
                         // Else persist data
-                        if (programmesAsString.equals(savedProgrammesJson)) {
-                            Log.d("XLAir", "Programme data is not changed");
+                        if (eventsAsString.equals(savedEventsJson)) {
+                            Log.d("XLAir", "Event data is not changed");
                         }
                         else {
-                            Log.d("XLAir", "Programme data is changed");
-                            handleProgrammeList(programmes);
+                            Log.d("XLAir", "Event data is changed");
+                            handleEventList(events);
                         }
 
                         // Save the loaded JSON into shared prefs
                         SharedPreferences.Editor prefEditor = getActivity().getSharedPreferences( "XLAir", Context.MODE_WORLD_WRITEABLE ).edit();
-                        prefEditor.putString("programmesJson", programmesAsString);
+                        prefEditor.putString("eventsJson", eventsAsString);
                         prefEditor.commit();
 
                     } catch (Exception ex) {
                         Log.e(TAG, "Failed to parse JSON due to: " + ex);
-                        failedLoadingProgrammes();
+                        failedLoadingEvents();
                     }
                 } else {
                     Log.e(TAG, "Server responded with status code: " + statusLine.getStatusCode());
-                    failedLoadingProgrammes();
+                    failedLoadingEvents();
                 }
             } catch (Exception ex) {
                 Log.e(TAG, "Failed to send HTTP POST request due to: " + ex);
-                failedLoadingProgrammes();
+                failedLoadingEvents();
             }
             return null;
         }
@@ -271,58 +245,11 @@ public class ProgrammeListFragment extends Fragment {
         @Override
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
+
             //Start download service for images and audio
-            Intent dlServiceIntent = new Intent(getActivity(), FileDownloader.class);
-            getActivity().startService(dlServiceIntent);
+            //Intent dlServiceIntent = new Intent(getActivity(), FileDownloader.class);
+            //getActivity().startService(dlServiceIntent);
 
-        }
-
-    }
-
-    private class BroadcastFetcher extends AsyncTask<Long, Void, Void> {
-        private static final String TAG = "BroadcastFetcher";
-        public static final String SERVER_URL = "http://svtpk.be/files/broadcasts.json";
-
-        @Override
-        protected Void doInBackground(Long... params) {
-            long id = params[0];
-
-            try {
-                //Create an HTTP client
-                HttpClient client = new DefaultHttpClient();
-                HttpGet getRequest = new HttpGet(SERVER_URL);
-
-                //Perform the request and check the status code
-                HttpResponse response = client.execute(getRequest);
-                StatusLine statusLine = response.getStatusLine();
-                if (statusLine.getStatusCode() == 200) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream content = entity.getContent();
-
-                    try {
-                        //Read the server response and attempt to parse it as JSON
-                        Reader reader = new InputStreamReader(content);
-
-                        GsonBuilder gsonBuilder = new GsonBuilder();
-                        gsonBuilder.setDateFormat("yyyy-MM-dd hh:mm:ss");
-                        Gson gson = gsonBuilder.create();
-                        List<Broadcast> broadcasts = new ArrayList<Broadcast>();
-                        broadcasts = Arrays.asList(gson.fromJson(reader, Broadcast[].class));
-
-                        content.close();
-
-                        handleBroadcasts(id, broadcasts);
-
-                    } catch (Exception ex) {
-                        Log.e(TAG, "Failed to parse JSON due to: " + ex);
-                    }
-                } else {
-                    Log.e(TAG, "Server responded with status code: " + statusLine.getStatusCode());
-                }
-            } catch (Exception ex) {
-                Log.e(TAG, "Failed to send HTTP POST request due to: " + ex);
-            }
-            return null;
         }
 
     }
@@ -340,6 +267,6 @@ public class ProgrammeListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-        public void onProgrammeSelected(long id);
+        public void onEventSelected(long id);
     }
 }

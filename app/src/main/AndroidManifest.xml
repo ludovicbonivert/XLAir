@@ -16,7 +16,7 @@
         android:largeHeap="true">
 
         <meta-data android:name="DATABASE" android:value="xlair.db" />
-        <meta-data android:name="VERSION" android:value="2" />
+        <meta-data android:name="VERSION" android:value="6" />
 
         <activity
             android:name=".MainActivity"
@@ -32,7 +32,7 @@
         <service
             android:name=".Adapters.FileDownloader"
             android:exported="false"></service>
-        <meta-data
+<meta-data
             android:name="io.fabric.ApiKey"
             android:value="f7609555f6fa141ca2c9d98bffbed4aec5aa8368" />
     </application>

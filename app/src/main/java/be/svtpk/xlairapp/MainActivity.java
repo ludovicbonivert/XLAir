@@ -45,10 +45,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import io.fabric.sdk.android.Fabric;
+import be.svtpk.xlairapp.Data.Broadcast;
+
+/**
+ * Fragment animation: http://stackoverflow.com/a/17488542
+ */
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProgrammeListFragment.OnFragmentInteractionListener,
-        ProgrammeFragment.OnFragmentInteractionListener {
+        ProgrammeFragment.OnFragmentInteractionListener, EventListFragment.OnFragmentInteractionListener,
+        EventFragment.OnFragmentInteractionListener  {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "HvLUDxv9TTrmGPcc0Ak9TLOUg";
@@ -255,6 +261,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+		item.setChecked(true);
         Fragment fragment = new LiveFragment();
 
         if (id == R.id.nav_live) {
@@ -268,6 +275,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
@@ -311,18 +319,53 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
-    @Override
-    public void onProgrammeSelected(int position) {
+	    @Override
+    public void onEventSelected(long id) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+
+        // Put selected id programme in bundle
+        Bundle bundle = new Bundle();
+        bundle.putLong("selectedEvent", id);
+        EventFragment fragment = new EventFragment();
+        fragment.setArguments(bundle);
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.content_main, new ProgrammeFragment());
+        transaction.replace(R.id.content_main, fragment);
         transaction.addToBackStack(null);
 
         // Commit the transaction
         transaction.commit();
     }
+
+       @Override
+    public void onProgrammeSelected(long id) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+
+        // Put selected id programme in bundle
+        Bundle bundle = new Bundle();
+        bundle.putLong("selectedProgramme", id);
+        ProgrammeFragment fragment = new ProgrammeFragment();
+        fragment.setArguments(bundle);
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.content_main, fragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+	@Override
+    public void onBroadcastSelected(Broadcast broadcast) {
+        //TODO do something with the selected broadcast -> stream URL via MediaPlayer
+        Log.d("XLair", "To stream broadcast URL" + broadcast.getUri());
+    }
+
 
 
     public class HTTPRequestAndGetJsonTask extends AsyncTask<String, String, JSONArray> {

@@ -31,8 +31,8 @@ public class Programme extends SugarRecord {
     @SerializedName("updated_at")
     Date updatedAt;
 
-    @Ignore
-    List<Broadcast> broadcastList = new ArrayList<Broadcast>();
+
+    private static final String BASE_URL = "http://www.xlair.be/public/uploads/programs/";
 
 
     public Programme() {
@@ -73,7 +73,7 @@ public class Programme extends SugarRecord {
     }
 
     public String getImgSrc() {
-        return "http://www.xlair.be/public/uploads/programs/" + this.image;
+        return (BASE_URL + this.image);
     }
 
     public String getImageFileSrc() {
@@ -100,12 +100,12 @@ public class Programme extends SugarRecord {
         this.updatedAt = updatedAt;
     }
 
-    public List<Broadcast> getBroadcastList() {
-        return broadcastList;
+    public List<Broadcast> getSavedBroadcasts(){
+        return Broadcast.find(Broadcast.class, "programme = ?", String.valueOf(this.getId()));
     }
 
-    public void setBroadcastList(List<Broadcast> broadcastList) {
-        this.broadcastList = broadcastList;
+    public int getNbBroadcasts() {
+        return getSavedBroadcasts().size();
     }
 
 
