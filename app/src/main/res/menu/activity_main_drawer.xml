@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_live"
+            android:icon="@mipmap/ic_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="@string/menu_item_live" />
+        <item
+            android:id="@+id/nav_programmas"
+            android:icon="@mipmap/ic_programmas"
+            android:title="@string/menu_item_programmas" />
+        <item
+            android:id="@+id/nav_events"
+            android:icon="@mipmap/ic_events"
+            android:title="@string/menu_item_events" />
+        <item
+            android:id="@+id/nav_contact"
+            android:icon="@mipmap/ic_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="@string/menu_item_contact" />
+    </group>
+
+</menu>
