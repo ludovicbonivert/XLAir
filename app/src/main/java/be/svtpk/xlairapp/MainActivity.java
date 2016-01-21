@@ -108,6 +108,9 @@ public class MainActivity extends AppCompatActivity
                     playerIsPlaying = true;
                 } else {
                     mPlayer.stop();
+                    mPlayer.reset();
+                    mPlayer.release();
+
                     playButton.setImageResource(R.drawable.ic_action_play);
                     playerIsPlaying = false;
                 }
@@ -140,7 +143,14 @@ public class MainActivity extends AppCompatActivity
         catch (IllegalStateException e) {
             Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         }
-        mPlayer.start();
+        mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+
+        });
+
 
     }
 
