@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_programmas) {
             fragment = new ProgrammeListFragment();
         } else if (id == R.id.nav_events) {
-            fragment = new EventsFragment();
+            fragment = new EventListFragment();
         } else if (id == R.id.nav_contact) {
             fragment = new ContactFragment();
         }
