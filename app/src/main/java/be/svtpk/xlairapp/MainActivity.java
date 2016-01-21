@@ -1,9 +1,11 @@
 package be.svtpk.xlairapp;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,7 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ProgrammeListFragment.OnFragmentInteractionListener,
+        ProgrammeFragment.OnFragmentInteractionListener {
 
 
     @Override
@@ -32,6 +35,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -76,15 +90,22 @@ public class MainActivity extends AppCompatActivity
             fragment = new LiveFragment();
 
         } else if (id == R.id.nav_programmas) {
-            fragment = new ProgrammasFragment();
+            fragment = new ProgrammeListFragment();
         } else if (id == R.id.nav_events) {
             fragment = new EventsFragment();
         } else if (id == R.id.nav_contact) {
             fragment = new ContactFragment();
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.content_main, fragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -116,6 +137,20 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
+    }
+    @Override
+    public void onProgrammeSelected(int position) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.content_main, new ProgrammeFragment());
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
 }

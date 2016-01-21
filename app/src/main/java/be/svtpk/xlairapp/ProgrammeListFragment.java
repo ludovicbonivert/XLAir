@@ -2,8 +2,12 @@ package be.svtpk.xlairapp;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import be.svtpk.xlairapp.Adapters.FileDownloader;
 import be.svtpk.xlairapp.Adapters.ProgrammeAdapter;
 import be.svtpk.xlairapp.Data.Programme;
 
@@ -44,22 +49,28 @@ import be.svtpk.xlairapp.Data.Programme;
  * Card view: http://code.tutsplus.com/tutorials/getting-started-with-recyclerview-and-cardview-on-android--cms-23465
  * JSON parsing: http://kylewbanks.com/blog/Tutorial-Android-Parsing-JSON-with-GSON
  */
-public class ProgrammasFragment extends Fragment {
+public class ProgrammeListFragment extends Fragment {
 
     private static final int ARG_MENU_ITEM = 2;
     private List<Programme> programmes;
     private ProgrammeAdapter programmeAdapter;
     private RecyclerView rv;
+    private OnFragmentInteractionListener mListener;
 
-    public ProgrammasFragment() {
+    public ProgrammeListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_programmas, container, false);
+        View view = inflater.inflate(R.layout.fragment_programme_list, container, false);
         FragmentActivity context = getActivity();
 
         rv = (RecyclerView) view.findViewById(R.id.rec_view_prog);
@@ -74,13 +85,59 @@ public class ProgrammasFragment extends Fragment {
         // Set adapter to page view
         rv.setAdapter(programmeAdapter);
 
+        programmeAdapter.SetOnItemClickListener(new ProgrammeAdapter.OnItemClickListener() {
+            public void onItemClick(View v, int position) {
+
+                // Load programme detail fragment on item click
+                //getFragmentManager().beginTransaction().add(R.id.content_main, new ProgrammeFragment()).commit();
+                mListener.onProgrammeSelected(0);
+
+            }
+        });
+
         return view;
     }
+
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         ((MainActivity) activity).onSectionAttached(ARG_MENU_ITEM);
+
+        if (activity instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().registerReceiver(mReceiver, new IntentFilter(FileDownloader.DOWNLOAD_ACTION));
+    }
+
+    DownloadedImageReceiver mReceiver = new DownloadedImageReceiver();
+
+    //The DownloadedImageReceiver listens for updates from the service
+    private class DownloadedImageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            syncData();
+        }
+    }
+
+    protected void syncData(){
+        programmeAdapter.notifyDataSetChanged();
+
     }
 
 
@@ -89,11 +146,11 @@ public class ProgrammasFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ProgrammasFragment.this.programmes.clear();
-                ProgrammasFragment.this.programmes.addAll(programmes);
+                ProgrammeListFragment.this.programmes.clear();
+                ProgrammeListFragment.this.programmes.addAll(programmes);
 
                 programmeAdapter.notifyDataSetChanged();
-                for (Programme prog : ProgrammasFragment.this.programmes) {
+                for (Programme prog : ProgrammeListFragment.this.programmes) {
 
                     // Strip away html tags and tabs from description
                     String strippedDesc = Html.fromHtml(prog.getDesc()).toString();
@@ -102,8 +159,6 @@ public class ProgrammasFragment extends Fragment {
 
                     // Sugar ORM save for later use
                     prog.save();
-
-                    Toast.makeText(getActivity(), prog.getTitle() + "is saved", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -183,5 +238,32 @@ public class ProgrammasFragment extends Fragment {
             return null;
         }
 
+        @Override
+        protected void onPostExecute(String status) {
+            super.onPostExecute(status);
+
+
+            //Start download service for images and audio
+            Intent dlServiceIntent = new Intent(getActivity(), FileDownloader.class);
+            getActivity().startService(dlServiceIntent);
+
+        }
+
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+        public void onProgrammeSelected(int position);
     }
 }

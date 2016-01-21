@@ -23,7 +23,7 @@ public class Programme extends SugarRecord {
 
     String image;
 
-    int iconId;
+    String imageFileSrc = "";
 
     @SerializedName("created_at")
     Date createdAt;
@@ -34,26 +34,11 @@ public class Programme extends SugarRecord {
     @Ignore
     List<Broadcast> broadcastList = new ArrayList<Broadcast>();
 
+
     public Programme() {
 
     }
 
-    public Programme(String title, String desc, int iconId, List<Broadcast> broadcastList) {
-        this.title = title;
-        this.desc = desc;
-        this.iconId = iconId;
-        this.broadcastList = broadcastList;
-    }
-
-    public Programme(long programmeId, String title, String desc, int iconId, Date createdAt, Date updatedAt, List<Broadcast> broadcastList) {
-        this.programmeId = programmeId;
-        this.title = title;
-        this.desc = desc;
-        this.iconId = iconId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.broadcastList = broadcastList;
-    }
 
     public long getProgrammeId() {
         return programmeId;
@@ -87,12 +72,16 @@ public class Programme extends SugarRecord {
         this.image = image;
     }
 
-    public int getIconId() {
-        return iconId;
+    public String getImgSrc() {
+        return "http://www.xlair.be/public/uploads/programs/" + this.image;
     }
 
-    public void setIconId(int iconId) {
-        this.iconId = iconId;
+    public String getImageFileSrc() {
+        return imageFileSrc;
+    }
+
+    public void setImageFileSrc(String imageFileSrc) {
+        this.imageFileSrc = imageFileSrc;
     }
 
     public Date getCreatedAt() {
