@@ -30,6 +30,9 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,11 +74,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void success(Result<AppSession> result) {
 
+
             }
 
             @Override
             public void failure(TwitterException e) {
-
+                Toast.makeText(getApplicationContext(), "Could not retrieve tweets", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
         });
 
@@ -281,13 +286,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public class HTTPRequestAndGetJsonTask extends AsyncTask<String, String, String>{
+    public class HTTPRequestAndGetJsonTask extends AsyncTask<String, String, JSONArray>{
 
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 
         @Override
-        protected String doInBackground(String... params) {
+        protected JSONArray doInBackground(String... params) {
             try{
                 //URL urlToMomenteleUitzending = new URL("http://www.xlair.be/scheme/data");
                 URL urlToMomenteleUitzending = new URL(params[0]);
@@ -304,8 +309,14 @@ public class MainActivity extends AppCompatActivity {
                     buffer.append(line);
                 }
 
+                try{
+                    JSONArray parentObject = new JSONArray(buffer.toString());
+                    return parentObject;
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
 
-                return buffer.toString();
+                //return buffer.toString();
 
                 //jsonParsing(line);
 
@@ -331,15 +342,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         @Override
-        protected void onPostExecute(String theJson) {
+        protected void onPostExecute(JSONArray theJson) {
             if(theJson != null){
                 super.onPostExecute(theJson);
                 Log.d(LOG_TAG, "Result of theJson" + theJson);
                 EditText e = (EditText) findViewById(R.id.editText);
-                if(theJson == "[]"){
+                if(theJson.length() == 0){
                     e.setText("Geen uitzending");
                 }else{
-                    e.setText("Geen uitzending");
+                    e.setText("Wel uitzending");
                 }
 
 

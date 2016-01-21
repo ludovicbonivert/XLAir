@@ -78,7 +78,7 @@
                     android:layout_height="50dp"
                     android:id="@+id/editText"
                     android:editable="false"
-                    android:text="Hey" />
+                    android:text="@string/offline" />
 
             </RelativeLayout>
         </RelativeLayout>
