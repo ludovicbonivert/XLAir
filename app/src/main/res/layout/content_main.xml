@@ -21,6 +21,7 @@
         tools:layout="@layout/fragment_twitter_timeline"
         />
 
+    <!--
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="match_parent"  tools:context=".MainActivity">
 
@@ -54,7 +55,7 @@
                 android:text="@string/offline" />
 
         </RelativeLayout>
-    </RelativeLayout>
+    </RelativeLayout> -->
 
 
 
