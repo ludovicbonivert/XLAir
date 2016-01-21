@@ -50,7 +50,7 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Pers
         personViewHolder.currentProgramme = programmes.get(i);
         personViewHolder.position = i;
         personViewHolder.programmeTitle.setText(programmes.get(i).getTitle());
-        personViewHolder.programmeNbBroadcasts.setText(programmes.get(i).getBroadcastList().size() + " uitzendingen");
+        personViewHolder.programmeNbBroadcasts.setText(programmes.get(i).getNbBroadcasts() + " uitzendingen");
         personViewHolder.programmeDesc.setText(programmes.get(i).getDesc());
         try {
             if(! programmes.get(i).getImageFileSrc().isEmpty()) {

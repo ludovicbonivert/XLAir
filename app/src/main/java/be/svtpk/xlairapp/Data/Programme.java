@@ -31,9 +31,6 @@ public class Programme extends SugarRecord {
     @SerializedName("updated_at")
     Date updatedAt;
 
-    @Ignore
-    List<Broadcast> broadcastList = new ArrayList<Broadcast>();
-
 
     public Programme() {
 
@@ -100,12 +97,12 @@ public class Programme extends SugarRecord {
         this.updatedAt = updatedAt;
     }
 
-    public List<Broadcast> getBroadcastList() {
-        return broadcastList;
+    public List<Broadcast> getSavedBroadcasts(){
+        return Broadcast.find(Broadcast.class, "programme = ?", String.valueOf(this.getId()));
     }
 
-    public void setBroadcastList(List<Broadcast> broadcastList) {
-        this.broadcastList = broadcastList;
+    public int getNbBroadcasts() {
+        return getSavedBroadcasts().size();
     }
 
 

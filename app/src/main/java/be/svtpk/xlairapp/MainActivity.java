@@ -11,9 +11,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import be.svtpk.xlairapp.Data.Broadcast;
+
+/**
+ * Fragment animation: http://stackoverflow.com/a/17488542
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProgrammeListFragment.OnFragmentInteractionListener,
         ProgrammeFragment.OnFragmentInteractionListener {
@@ -34,7 +40,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
 
@@ -72,17 +77,13 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        item.setChecked(true);
         int id = item.getItemId();
         Fragment fragment = new LiveFragment();
 
@@ -97,7 +98,9 @@ public class MainActivity extends AppCompatActivity
             fragment = new ContactFragment();
         }
 
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
@@ -142,15 +145,29 @@ public class MainActivity extends AppCompatActivity
 
     }
     @Override
-    public void onProgrammeSelected(int position) {
+    public void onProgrammeSelected(long id) {
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+
+        // Put selected id programme in bundle
+        Bundle bundle = new Bundle();
+        bundle.putLong("selectedProgramme", id);
+        ProgrammeFragment fragment = new ProgrammeFragment();
+        fragment.setArguments(bundle);
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.content_main, new ProgrammeFragment());
+        transaction.replace(R.id.content_main, fragment);
         transaction.addToBackStack(null);
 
         // Commit the transaction
         transaction.commit();
+    }
+
+    @Override
+    public void onBroadcastSelected(Broadcast broadcast) {
+        //TODO do something with the selected broadcast -> stream URL via MediaPlayer
+        Log.d("XLair", "To stream broadcast URL" + broadcast.getUri());
     }
 }

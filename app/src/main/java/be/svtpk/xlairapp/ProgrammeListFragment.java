@@ -40,6 +40,7 @@ import java.util.List;
 
 import be.svtpk.xlairapp.Adapters.FileDownloader;
 import be.svtpk.xlairapp.Adapters.ProgrammeAdapter;
+import be.svtpk.xlairapp.Data.Broadcast;
 import be.svtpk.xlairapp.Data.Programme;
 
 
@@ -89,8 +90,9 @@ public class ProgrammeListFragment extends Fragment {
             public void onItemClick(View v, int position) {
 
                 // Load programme detail fragment on item click
-                //getFragmentManager().beginTransaction().add(R.id.content_main, new ProgrammeFragment()).commit();
-                mListener.onProgrammeSelected(0);
+                List<Programme> selectedProgramme = Programme.find(Programme.class, "programme_id = ?", programmes.get(position).getProgrammeId()+"");
+                Log.d("XLAir", "selected programme: " + programmes.get(position).getTitle());
+                mListener.onProgrammeSelected(selectedProgramme.get(0).getId());
 
             }
         });
@@ -150,6 +152,9 @@ public class ProgrammeListFragment extends Fragment {
                 ProgrammeListFragment.this.programmes.addAll(programmes);
 
                 programmeAdapter.notifyDataSetChanged();
+
+                Broadcast.deleteAll(Broadcast.class);
+
                 for (Programme prog : ProgrammeListFragment.this.programmes) {
 
                     // Strip away html tags and tabs from description
@@ -159,16 +164,41 @@ public class ProgrammeListFragment extends Fragment {
 
                     // Sugar ORM save for later use
                     prog.save();
+
+                    // Fetch broadcasts
+                    new BroadcastFetcher().execute(prog.getId());
                 }
+
             }
         });
+    }
+
+    private void handleBroadcasts(final long id, final List<Broadcast> broadcasts) {
+
+        // Save broadcasts for programme
+        Programme programme = Programme.findById(Programme.class, id);
+        Log.d("XLAir", "Handeling broadcasts for id: " + id);
+
+        try {
+            for (Broadcast br : broadcasts) {
+                br.setProgramme(programme);
+                br.save();
+                Log.d("XLAir", "Broadcast: " + br.getUri() + ", program: " + br.getProgramme().getTitle());
+            }
+        }
+        catch (NullPointerException ex) {
+            Log.e("XLAir", "No broadcasts saved for word " + programme.getTitle());
+        }
+
+        Log.d("XLAir", "Nb Broadcasts found after saving: " + Broadcast.find(Broadcast.class, "programme = ?", String.valueOf(id)).size());
+
     }
 
     private void failedLoadingProgrammes() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), "Failed to load Posts. Have a look at LogCat.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Failed to load, make sure your internet connection is on.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -242,11 +272,58 @@ public class ProgrammeListFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
 
-
             //Start download service for images and audio
             Intent dlServiceIntent = new Intent(getActivity(), FileDownloader.class);
             getActivity().startService(dlServiceIntent);
 
+        }
+
+    }
+
+    private class BroadcastFetcher extends AsyncTask<Long, Void, Void> {
+        private static final String TAG = "BroadcastFetcher";
+        public static final String SERVER_URL = "http://svtpk.be/files/broadcasts.json";
+
+        @Override
+        protected Void doInBackground(Long... params) {
+            long id = params[0];
+
+            try {
+                //Create an HTTP client
+                HttpClient client = new DefaultHttpClient();
+                HttpGet getRequest = new HttpGet(SERVER_URL);
+
+                //Perform the request and check the status code
+                HttpResponse response = client.execute(getRequest);
+                StatusLine statusLine = response.getStatusLine();
+                if (statusLine.getStatusCode() == 200) {
+                    HttpEntity entity = response.getEntity();
+                    InputStream content = entity.getContent();
+
+                    try {
+                        //Read the server response and attempt to parse it as JSON
+                        Reader reader = new InputStreamReader(content);
+
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        gsonBuilder.setDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Gson gson = gsonBuilder.create();
+                        List<Broadcast> broadcasts = new ArrayList<Broadcast>();
+                        broadcasts = Arrays.asList(gson.fromJson(reader, Broadcast[].class));
+
+                        content.close();
+
+                        handleBroadcasts(id, broadcasts);
+
+                    } catch (Exception ex) {
+                        Log.e(TAG, "Failed to parse JSON due to: " + ex);
+                    }
+                } else {
+                    Log.e(TAG, "Server responded with status code: " + statusLine.getStatusCode());
+                }
+            } catch (Exception ex) {
+                Log.e(TAG, "Failed to send HTTP POST request due to: " + ex);
+            }
+            return null;
         }
 
     }
@@ -264,6 +341,6 @@ public class ProgrammeListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-        public void onProgrammeSelected(int position);
+        public void onProgrammeSelected(long id);
     }
 }
