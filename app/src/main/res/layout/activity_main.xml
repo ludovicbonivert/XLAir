@@ -29,13 +29,26 @@
             >
 
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ic_action_play"
+                android:src="@drawable/ic_action_play"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+
+
+                />
+            <!--
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_play"
                 android:id="@+id/playbtn"
                 android:layout_centerInParent="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true" /> -->
 
             <EditText
                 android:layout_width="200dp"

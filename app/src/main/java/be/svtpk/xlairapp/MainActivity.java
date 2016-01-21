@@ -2,6 +2,7 @@ package be.svtpk.xlairapp;
 
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     private String mTitle;
 
     MediaPlayer mPlayer;
-    Button playButton;
+    ImageButton playButton;
     boolean playerIsPlaying = false;
     public String URLToStream = "http://streaming.ritcs.be:8000/.mp3";
 
@@ -96,17 +98,17 @@ public class MainActivity extends AppCompatActivity
 
         playerIsPlaying = false;
 
-        playButton = (Button) findViewById(R.id.playbtn);
+        playButton = (ImageButton) findViewById(R.id.ic_action_play);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!playerIsPlaying) {
                     createAndPlayMusicPlayer();
-                    playButton.setText(R.string.action_pause);
+                    playButton.setImageResource(R.drawable.ic_action_pause);
                     playerIsPlaying = true;
                 } else {
                     mPlayer.stop();
-                    playButton.setText(R.string.action_play);
+                    playButton.setImageResource(R.drawable.ic_action_play);
                     playerIsPlaying = false;
                 }
             }
