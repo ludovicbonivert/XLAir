@@ -36,6 +36,7 @@
             android:paddingBottom="@dimen/activity_vertical_margin"
             >
 
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,8 +48,9 @@
             <EditText
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:id="@+id/editText"
+                android:id="@+id/current_broadcast"
                 android:editable="false"
+                android:background="@null"
                 android:text="@string/offline" />
 
         </RelativeLayout>

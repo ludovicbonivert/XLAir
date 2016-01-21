@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity
         setupTwitterFabric();
         setupToolbar();
         findAndSetupRadioPlayer();
+
+        //http://jsonplaceholder.typicode.com/posts
+        new HTTPRequestAndGetJsonTask().execute("http://www.xlair.be/scheme/data");
     }
 
     private void findAndSetupRadioPlayer() {
@@ -298,7 +301,6 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected JSONArray doInBackground(String... params) {
             try{
-                //URL urlToMomenteleUitzending = new URL("http://www.xlair.be/scheme/data");
                 URL urlToMomenteleUitzending = new URL(params[0]);
                 connection = (HttpURLConnection) urlToMomenteleUitzending.openConnection();
                 connection.connect();
@@ -350,7 +352,7 @@ public class MainActivity extends AppCompatActivity
             if(theJson != null){
                 super.onPostExecute(theJson);
                 Log.d(LOG_TAG, "Result of theJson" + theJson);
-                EditText e = (EditText) findViewById(R.id.editText);
+                EditText e = (EditText) findViewById(R.id.current_broadcast);
                 if(theJson.length() == 0){
                     e.setText("Geen uitzending");
                 }else{
