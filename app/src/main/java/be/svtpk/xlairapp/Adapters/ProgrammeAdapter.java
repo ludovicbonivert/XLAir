@@ -1,8 +1,6 @@
 package be.svtpk.xlairapp.Adapters;
 
-import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,7 +14,6 @@ import java.io.File;
 import java.util.List;
 
 import be.svtpk.xlairapp.Data.Programme;
-import be.svtpk.xlairapp.LiveFragment;
 import be.svtpk.xlairapp.R;
 
 /**
@@ -24,7 +21,7 @@ import be.svtpk.xlairapp.R;
  *
  * Source onitemclicklistener: http://venomvendor.blogspot.be/2014/07/setting-onitemclicklistener-for-recycler-view.html
  */
-public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.PersonViewHolder>{
+public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.ProgrammeViewHolder>{
 
     List<Programme> programmes;
     public static OnItemClickListener mItemClickListener;
@@ -39,31 +36,31 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Pers
     }
 
     @Override
-    public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ProgrammeViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_programme, viewGroup, false);
-        PersonViewHolder pvh = new PersonViewHolder(v);
+        ProgrammeViewHolder pvh = new ProgrammeViewHolder(v);
         return pvh;
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-        personViewHolder.currentProgramme = programmes.get(i);
-        personViewHolder.position = i;
-        personViewHolder.programmeTitle.setText(programmes.get(i).getTitle());
-        personViewHolder.programmeNbBroadcasts.setText(programmes.get(i).getBroadcastList().size() + " uitzendingen");
-        personViewHolder.programmeDesc.setText(programmes.get(i).getDesc());
+    public void onBindViewHolder(ProgrammeViewHolder programmeViewHolder, int i) {
+        programmeViewHolder.currentProgramme = programmes.get(i);
+        programmeViewHolder.position = i;
+        programmeViewHolder.programmeTitle.setText(programmes.get(i).getTitle());
+        programmeViewHolder.programmeNbBroadcasts.setText(programmes.get(i).getNbBroadcasts() + " uitzendingen");
+        programmeViewHolder.programmeDesc.setText(programmes.get(i).getDesc());
         try {
             if(! programmes.get(i).getImageFileSrc().isEmpty()) {
-                personViewHolder.programmaIcon.setImageURI(
+                programmeViewHolder.programmaIcon.setImageURI(
                         Uri.fromFile(new File(programmes.get(i).getImageFileSrc()))
                 );
             }
             else {
-                personViewHolder.programmaIcon.setImageResource(R.drawable.no_image);
+                programmeViewHolder.programmaIcon.setImageResource(R.drawable.no_image);
             }
         }
         catch (OutOfMemoryError e) {
-            personViewHolder.programmaIcon.setImageResource(R.drawable.no_image);
+            programmeViewHolder.programmaIcon.setImageResource(R.drawable.no_image);
         }
     }
 
@@ -72,7 +69,7 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Pers
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public static class PersonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ProgrammeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Programme currentProgramme;
         int position;
         CardView cv;
@@ -81,9 +78,9 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Pers
         TextView programmeDesc;
         ImageView programmaIcon;
 
-        PersonViewHolder(View itemView) {
+        ProgrammeViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
+            cv = (CardView)itemView.findViewById(R.id.cv_programme);
             programmeTitle= (TextView)itemView.findViewById(R.id.programme_title);
             programmeNbBroadcasts = (TextView)itemView.findViewById(R.id.programme_nb_broadcasts);
             programmeDesc = (TextView)itemView.findViewById(R.id.programme_desc);

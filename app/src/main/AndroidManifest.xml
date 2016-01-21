@@ -16,7 +16,7 @@
         android:largeHeap="true">
 
         <meta-data android:name="DATABASE" android:value="xlair.db" />
-        <meta-data android:name="VERSION" android:value="2" />
+        <meta-data android:name="VERSION" android:value="5" />
 
         <activity
             android:name=".MainActivity"
