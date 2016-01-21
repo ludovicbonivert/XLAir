@@ -12,6 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rec_view_prog"
-        />
+        android:paddingBottom="100dp" />
 
 </FrameLayout>
