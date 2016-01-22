@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         setupTwitterFabric();
         setupToolbar();
-        findAndSetupRadioPlayer();
+        findAndSetupRadioPlayer(URLToStream);
 
 
         launchLiveFragment();
@@ -100,38 +100,49 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    private void findAndSetupRadioPlayer() {
+    private void findAndSetupRadioPlayer(final String theLink) {
 
         playerIsPlaying = false;
 
         playButton = (ImageButton) findViewById(R.id.ic_action_play);
+
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!playerIsPlaying) {
-                    createAndPlayMusicPlayer();
-                    playButton.setImageResource(R.drawable.ic_action_pause);
-                    playerIsPlaying = true;
-                } else {
-                    mPlayer.stop();
-                    mPlayer.reset();
-                    mPlayer.release();
-
-                    playButton.setImageResource(R.drawable.ic_action_play);
-                    playerIsPlaying = false;
-                }
+                togglePlayButtonAndPlayMusic(theLink);
             }
         });
 
     }
 
-    private void createAndPlayMusicPlayer() {
+    private void togglePlayButtonAndPlayMusic(String theLink){
+
+        if (!playerIsPlaying) {
+            createAndPlayMusicPlayer(theLink);
+            playButton.setImageResource(R.drawable.ic_action_pause);
+            playerIsPlaying = true;
+            Log.d(LOG_TAG, "Player is " + playerIsPlaying);
+        } else {
+            if(mPlayer != null){
+                mPlayer.stop();
+                mPlayer.reset();
+                mPlayer.release();
+            }
+            playButton.setImageResource(R.drawable.ic_action_play);
+            playerIsPlaying = false;
+            Log.d(LOG_TAG, "Player is " + playerIsPlaying);
+        }
+
+    }
+
+    private void createAndPlayMusicPlayer(String linkToStream) {
 
         mPlayer = new MediaPlayer();
         mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         try {
-            mPlayer.setDataSource(URLToStream);
+            mPlayer.setDataSource(linkToStream);
         } catch (IllegalArgumentException e) {
             Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
         } catch (SecurityException e) {
@@ -248,7 +259,7 @@ public class MainActivity extends AppCompatActivity
             createTweet();
             return true;
         }
-        
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -344,7 +355,7 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         bundle.putLong("selectedProgramme", id);
         ProgrammeFragment fragment = new ProgrammeFragment();
-        fragment.setArguments(bundle);
+           fragment.setArguments(bundle);
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
@@ -359,6 +370,7 @@ public class MainActivity extends AppCompatActivity
     public void onBroadcastSelected(Broadcast broadcast) {
         //TODO do something with the selected broadcast -> stream URL via MediaPlayer
         Log.d("XLair", "To stream broadcast URL" + broadcast.getUri());
+        togglePlayButtonAndPlayMusic(broadcast.getUri());
     }
 
 
