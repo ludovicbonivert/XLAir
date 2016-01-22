@@ -1,14 +1,54 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="be.svtpk.xlairapp.ContactFragment"
-    android:background="@color/material_blue_grey_800">
+    android:background="@android:color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="160dp"
+        android:id="@+id/contact_img"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/side_nav_bar"
+        />
 
-</FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#64000000" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="40dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_white"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/contact_img"
+        android:src="@drawable/btn_info"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
+        android:id="@+id/btn_info"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/btn_info"
+        android:src="@drawable/btn_join"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
+        android:id="@+id/btn_join" />
+
+</RelativeLayout>

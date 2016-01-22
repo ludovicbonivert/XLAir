@@ -9,8 +9,8 @@
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="be.svtpk.xlairapp.TweetListFragment"
         android:id="@+id/fragment"
+        class="be.svtpk.xlairapp.TweetListFragment"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         tools:layout="@layout/fragment_twitter_timeline"

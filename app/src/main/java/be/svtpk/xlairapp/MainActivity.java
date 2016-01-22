@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity
     ImageButton playButton;
     boolean playerIsPlaying = false;
     public String URLToStream = "http://streaming.ritcs.be:8000/.mp3";
+    private final static String LIVE_URI = "http://streaming.ritcs.be:8000/.mp3";
 
 
     @Override
@@ -84,9 +85,16 @@ public class MainActivity extends AppCompatActivity
         launchLiveFragment();
 
 
-
         //http://jsonplaceholder.typicode.com/posts
         new HTTPRequestAndGetJsonTask().execute("http://www.xlair.be/scheme/data");
+
+        Button btnListenLive = (Button) findViewById(R.id.btn_listen_live);
+        btnListenLive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePlayButtonAndPlayMusic(LIVE_URI);
+            }
+        });
     }
 
     private void launchLiveFragment() {
@@ -371,6 +379,8 @@ public class MainActivity extends AppCompatActivity
         //TODO do something with the selected broadcast -> stream URL via MediaPlayer
         Log.d("XLair", "To stream broadcast URL" + broadcast.getUri());
         togglePlayButtonAndPlayMusic(broadcast.getUri());
+        EditText e = (EditText) findViewById(R.id.current_broadcast);
+        e.setText(broadcast.getProgramme().getTitle());
     }
 
 
