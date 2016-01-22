@@ -33,11 +33,7 @@ public class Broadcast extends SugarRecord {
     }
 
     public String getUri() {
-        try {
-            return (BASE_URL + URLDecoder.decode(this.programme.getTitle(), "UTF-8") + "/" + URLDecoder.decode(this.uri, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            return (BASE_URL + this.programme.getTitle() + this.uri);
-        }
+        return (BASE_URL + this.programme.getTitle().replace(" ", "%20") + "/" + this.uri.replace(" ", "%20"));
     }
 
     public void setUri(String uri) {

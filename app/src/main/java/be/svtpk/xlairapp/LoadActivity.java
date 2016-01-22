@@ -203,12 +203,8 @@ public class LoadActivity extends Activity {
         @Override
         protected Void doInBackground(Long... params) {
             long id = params[0];
-            String uri;
-            try {
-                uri = URLDecoder.decode(Programme.findById(Programme.class, id).getTitle(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                uri = Programme.findById(Programme.class, id).getTitle();
-            }
+            String uri = Programme.findById(Programme.class, id).getTitle();
+            uri = uri.replace(" ", "%20");
 
             try {
                 //Create an HTTP client
