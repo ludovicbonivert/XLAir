@@ -73,7 +73,7 @@ public class Programme extends SugarRecord {
     }
 
     public String getImgSrc() {
-        return (BASE_URL + this.image);
+        return (BASE_URL + this.image.replace(" ", "%20"));
     }
 
     public String getImageFileSrc() {

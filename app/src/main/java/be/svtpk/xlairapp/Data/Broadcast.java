@@ -1,19 +1,24 @@
 package be.svtpk.xlairapp.Data;
 
+import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 /**
  * Created by Sveta on 07/01/16.
  */
 public class Broadcast extends SugarRecord {
 
+    @SerializedName("naam")
     public String title;
-    public String description;
+    @SerializedName("locatie")
     public String uri;
     public Programme programme;
     @Ignore
-    private static final String BASE_URL = "http://www.xlair.be";
+    private static final String BASE_URL = "http://www.xlair.be/public/uploads/audio/";
 
 
     public Broadcast() {
@@ -27,16 +32,8 @@ public class Broadcast extends SugarRecord {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getUri() {
-        return (BASE_URL + uri);
+        return (BASE_URL + this.programme.getTitle().replace(" ", "%20") + "/" + this.uri.replace(" ", "%20"));
     }
 
     public void setUri(String uri) {
