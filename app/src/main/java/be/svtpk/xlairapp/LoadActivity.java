@@ -25,6 +25,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -196,16 +198,22 @@ public class LoadActivity extends Activity {
 
     private class BroadcastFetcher extends AsyncTask<Long, Void, Void> {
         private static final String TAG = "BroadcastFetcher";
-        public static final String SERVER_URL = "http://svtpk.be/files/broadcasts.json";
+        public static final String SERVER_URL = "http://www.xlair.be/programmas/data/audio/";
 
         @Override
         protected Void doInBackground(Long... params) {
             long id = params[0];
+            String uri;
+            try {
+                uri = URLDecoder.decode(Programme.findById(Programme.class, id).getTitle(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                uri = Programme.findById(Programme.class, id).getTitle();
+            }
 
             try {
                 //Create an HTTP client
                 HttpClient client = new DefaultHttpClient();
-                HttpGet getRequest = new HttpGet(SERVER_URL);
+                HttpGet getRequest = new HttpGet(SERVER_URL + uri);
 
                 //Perform the request and check the status code
                 HttpResponse response = client.execute(getRequest);

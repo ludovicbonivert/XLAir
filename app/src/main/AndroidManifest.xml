@@ -19,7 +19,7 @@
             android:value="xlair.db" />
         <meta-data
             android:name="VERSION"
-            android:value="6" />
+            android:value="7" />
 
         <activity
             android:name=".MainActivity"
