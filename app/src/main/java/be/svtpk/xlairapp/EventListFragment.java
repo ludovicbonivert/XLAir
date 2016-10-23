@@ -80,8 +80,7 @@ public class EventListFragment extends Fragment {
         // Init event list adapter
         events = Event.listAll(Event.class);
         eventAdapter = new EventAdapter(events);
-        // Download the list of events from API
-        new EventFetcher().execute();
+
         // Set adapter to page view
         rv.setAdapter(eventAdapter);
 
@@ -123,135 +122,6 @@ public class EventListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //getActivity().registerReceiver(mReceiver, new IntentFilter(FileDownloader.DOWNLOAD_ACTION));
-    }
-
-    //DownloadedImageReceiver mReceiver = new DownloadedImageReceiver();
-
-    //The DownloadedImageReceiver listens for updates from the service
-    /*private class DownloadedImageReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            syncData();
-        }
-    }
-
-    protected void syncData(){
-        eventAdapter.notifyDataSetChanged();
-
-    }*/
-
-
-    private void handleEventList(final List<Event> events) {
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                EventListFragment.this.events.clear();
-                EventListFragment.this.events.addAll(events);
-
-                eventAdapter.notifyDataSetChanged();
-
-                for (Event ev : EventListFragment.this.events) {
-
-                    // Strip away html tags and tabs from description
-                    String strippedDesc = Html.fromHtml(ev.getDescription()).toString();
-                    strippedDesc = strippedDesc.replace("\t", "");
-                    ev.setDescription(strippedDesc);
-
-                    // Sugar ORM save for later use
-                    ev.save();
-
-                }
-
-            }
-        });
-    }
-
-    private void failedLoadingEvents() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getActivity(), "Failed to load, make sure your internet connection is on.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private class EventFetcher extends AsyncTask<Void, Void, String> {
-        private static final String TAG = "EventFetcher";
-        public static final String SERVER_URL = "http://www.xlair.be/events/data/all";
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                //Create an HTTP client
-                HttpClient client = new DefaultHttpClient();
-                HttpGet getRequest = new HttpGet(SERVER_URL);
-
-                //Perform the request and check the status code
-                HttpResponse response = client.execute(getRequest);
-                StatusLine statusLine = response.getStatusLine();
-                if (statusLine.getStatusCode() == 200) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream content = entity.getContent();
-
-                    try {
-                        //Read the server response and attempt to parse it as JSON
-                        Reader reader = new InputStreamReader(content);
-
-                        GsonBuilder gsonBuilder = new GsonBuilder();
-                        gsonBuilder.setDateFormat("yyyy-MM-dd hh:mm:ss");
-                        Gson gson = gsonBuilder.create();
-                        List<Event> events = new ArrayList<Event>();
-                        events = Arrays.asList(gson.fromJson(reader, Event[].class));
-
-
-                        String eventsAsString = new Gson().toJson(events);
-                        SharedPreferences sharedPref = getActivity().getSharedPreferences("XLAir", Context.MODE_WORLD_WRITEABLE);
-                        String savedEventsJson = sharedPref.getString("eventsJson", "");
-
-                        content.close();
-
-                        // If data from internet == data in shared prefs, don't do anything
-                        // Else persist data
-                        if (eventsAsString.equals(savedEventsJson)) {
-                            Log.d("XLAir", "Event data is not changed");
-                        }
-                        else {
-                            Log.d("XLAir", "Event data is changed");
-                            handleEventList(events);
-                        }
-
-                        // Save the loaded JSON into shared prefs
-                        SharedPreferences.Editor prefEditor = getActivity().getSharedPreferences( "XLAir", Context.MODE_WORLD_WRITEABLE ).edit();
-                        prefEditor.putString("eventsJson", eventsAsString);
-                        prefEditor.commit();
-
-                    } catch (Exception ex) {
-                        Log.e(TAG, "Failed to parse JSON due to: " + ex);
-                        failedLoadingEvents();
-                    }
-                } else {
-                    Log.e(TAG, "Server responded with status code: " + statusLine.getStatusCode());
-                    failedLoadingEvents();
-                }
-            } catch (Exception ex) {
-                Log.e(TAG, "Failed to send HTTP POST request due to: " + ex);
-                failedLoadingEvents();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-
-            //Start download service for images and audio
-            //Intent dlServiceIntent = new Intent(getActivity(), FileDownloader.class);
-            //getActivity().startService(dlServiceIntent);
-
-        }
-
     }
 
     /**
