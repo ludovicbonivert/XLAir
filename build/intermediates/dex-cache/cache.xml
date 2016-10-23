@@ -2,20 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.digits.sdk.android/digits/1.9.3/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="990cba7dbe7fc91e1082a9a8ea6d663c0741a0f1">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.digits.sdk.android-digits-1.9.3_c50dc392fa3f05fcb8c9acf22ed4d8b3343010c1.jar" />
-    </item>
-    <item
-        jar="/Users/ludovicbonivert/.gradle/caches/modules-2/files-2.1/com.twitter/twitter-text/1.13.0/78415b95ae3184c5926d593feab64bfc0b73b2dd/twitter-text-1.13.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="78415b95ae3184c5926d593feab64bfc0b73b2dd">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/twitter-text-1.13.0_669b5b12a1c4a42ade277f22f5a464c37461d904.jar" />
-    </item>
-    <item
         jar="/Users/ludovicbonivert/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -23,11 +9,25 @@
         <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/gson-2.3_c58567a4d1234b944dba577cece8ef85b6d3725e.jar" />
     </item>
     <item
-        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/design/22.2.0/jars/classes.jar"
+        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.github.satyan/sugar/1.4/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.android.support-design-22.2.0_dec7304bc02503d32354167fa11859050d2a94d5.jar" />
+        sha1="ac045b53684345f4ec8468477e8fc5034d0d2bfd">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.github.satyan-sugar-1.4_ba05d1d95d8ab12119a1da436c9c53da5889c304.jar" />
+    </item>
+    <item
+        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.twitter.sdk.android/tweet-ui/1.9.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0ca05b62d108406bc08eb0ff9e0d619203724eff">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.twitter.sdk.android-tweet-ui-1.9.0_2f16d7d4d43479a3c9275f842c489f24687c0320.jar" />
+    </item>
+    <item
+        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5b37cf49773f7f17aca9830efd3053b0cac56728">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-22.2.0_1dc31711c7134b1c70d653e91b367bc501a8deb7.jar" />
     </item>
     <item
         jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.2.0/jars/classes.jar"
@@ -37,13 +37,6 @@
         <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-22.2.0_7a7384d8bc17c327180ef6a890d7c171dabd7389.jar" />
     </item>
     <item
-        jar="/Users/ludovicbonivert/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/18.0/cce0823396aa693798f8882e64213b1772032b09/guava-18.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="cce0823396aa693798f8882e64213b1772032b09">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/guava-18.0_96513d1bff46c4146d1f623134c0abe9f8879738.jar" />
-    </item>
-    <item
         jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/io.fabric.sdk.android/fabric/1.3.10/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -51,18 +44,18 @@
         <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/io.fabric.sdk.android-fabric-1.3.10_19b4196f8dcd93078ab2143f5b91887d6cf390fc.jar" />
     </item>
     <item
+        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.twitter.sdk.android/twitter-core/1.6.3/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b272ca6a1525f5c6215224eb3cfeb32eb5270667">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.twitter.sdk.android-twitter-core-1.6.3_f0473da6db20a979de724d08a59bc51be7e53e24.jar" />
+    </item>
+    <item
         jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.twitter.sdk.android/twitter/1.12.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="56c978fe05228a996c839624f9a48fe235c9612c">
         <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.twitter.sdk.android-twitter-1.12.0_d3819bbd7e37b426787086dc84d28b9ffe15635c.jar" />
-    </item>
-    <item
-        jar="/Users/ludovicbonivert/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.8.0/a517f29ed06be2b2879524fcd94b6e9b36e2e0b5/retrofit-1.8.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a517f29ed06be2b2879524fcd94b6e9b36e2e0b5">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/retrofit-1.8.0_242054e96abae60527152a1a0bf238298624958b.jar" />
     </item>
     <item
         jar="/Users/ludovicbonivert/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
@@ -79,25 +72,11 @@
         <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0_e59094d8aa952114ba9cfa829033cb1a8f4758f4.jar" />
     </item>
     <item
-        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="5b37cf49773f7f17aca9830efd3053b0cac56728">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-22.2.0_1dc31711c7134b1c70d653e91b367bc501a8deb7.jar" />
-    </item>
-    <item
         jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
         <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0_20ca903e5e7c96f4757f3e92a1ff2f6070f4659c.jar" />
-    </item>
-    <item
-        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-22.2.0_012bd66ba43e8e6bf66af0dc80254ec0853673c7.jar" />
     </item>
     <item
         jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.ms-square/expandableTextView/0.1.4/jars/classes.jar"
@@ -107,6 +86,20 @@
         <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.ms-square-expandableTextView-0.1.4_b70fac80eceff32d9537d1cab7e9b1cb57db79d0.jar" />
     </item>
     <item
+        jar="/Users/ludovicbonivert/.gradle/caches/modules-2/files-2.1/com.twitter/twitter-text/1.13.0/78415b95ae3184c5926d593feab64bfc0b73b2dd/twitter-text-1.13.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="78415b95ae3184c5926d593feab64bfc0b73b2dd">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/twitter-text-1.13.0_669b5b12a1c4a42ade277f22f5a464c37461d904.jar" />
+    </item>
+    <item
+        jar="/Users/ludovicbonivert/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.8.0/a517f29ed06be2b2879524fcd94b6e9b36e2e0b5/retrofit-1.8.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a517f29ed06be2b2879524fcd94b6e9b36e2e0b5">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/retrofit-1.8.0_242054e96abae60527152a1a0bf238298624958b.jar" />
+    </item>
+    <item
         jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -114,25 +107,32 @@
         <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-22.2.0_da2474077355e0aee5d9b251a1c0c0571280f15c.jar" />
     </item>
     <item
-        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.twitter.sdk.android/tweet-ui/1.9.0/jars/classes.jar"
+        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="0ca05b62d108406bc08eb0ff9e0d619203724eff">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.twitter.sdk.android-tweet-ui-1.9.0_2f16d7d4d43479a3c9275f842c489f24687c0320.jar" />
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-22.2.0_012bd66ba43e8e6bf66af0dc80254ec0853673c7.jar" />
     </item>
     <item
-        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.github.satyan/sugar/1.4/jars/classes.jar"
+        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.digits.sdk.android/digits/1.9.3/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="ac045b53684345f4ec8468477e8fc5034d0d2bfd">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.github.satyan-sugar-1.4_ba05d1d95d8ab12119a1da436c9c53da5889c304.jar" />
+        sha1="990cba7dbe7fc91e1082a9a8ea6d663c0741a0f1">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.digits.sdk.android-digits-1.9.3_c50dc392fa3f05fcb8c9acf22ed4d8b3343010c1.jar" />
     </item>
     <item
-        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.twitter.sdk.android/twitter-core/1.6.3/jars/classes.jar"
+        jar="/Users/ludovicbonivert/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/18.0/cce0823396aa693798f8882e64213b1772032b09/guava-18.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="b272ca6a1525f5c6215224eb3cfeb32eb5270667">
-        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.twitter.sdk.android-twitter-core-1.6.3_f0473da6db20a979de724d08a59bc51be7e53e24.jar" />
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/guava-18.0_96513d1bff46c4146d1f623134c0abe9f8879738.jar" />
+    </item>
+    <item
+        jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.android.support/design/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/pre-dexed/debug/com.android.support-design-22.2.0_dec7304bc02503d32354167fa11859050d2a94d5.jar" />
     </item>
     <item
         jar="/Users/ludovicbonivert/Documents/Git/XLAir/app/build/intermediates/exploded-aar/com.twitter.sdk.android/tweet-composer/1.0.2/jars/classes.jar"
